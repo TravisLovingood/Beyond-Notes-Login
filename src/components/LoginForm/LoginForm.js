@@ -1,15 +1,22 @@
 import React, {useState} from 'react';
+// axios  is used to make API requests to the backend.
 import axios from 'axios';
 import './LoginForm.css';
 import {API_BASE_URL} from '../../constants/apiContants';
 import { withRouter } from "react-router-dom";
 
 function LoginForm(props) {
+
+// The state object will contain the email and password values.
+// The useState hook is being used to handle the values entered by the user
     const [state , setState] = useState({
         email : "",
         password : "",
         successMessage: null
     })
+    
+// The setState method is responsible for updating these values.
+// Responsibility for updating the 'values' lies with the 'handleChange' function.
     const handleChange = (e) => {
         const {id , value} = e.target   
         setState(prevState => ({
@@ -17,6 +24,14 @@ function LoginForm(props) {
             [id] : value
         }))
     }
+
+
+// axios  is used to make API requests to the backend.
+
+// !! backend server needed for handling API!!
+
+// added a post request to the server where 'API_BASE_URL'
+//  is defined in the 'constants file'.
 
     const handleSubmitClick = (e) => {
         e.preventDefault();
@@ -45,18 +60,30 @@ function LoginForm(props) {
                 console.log(error);
             });
     }
+
+// Redirects the user to the Home page  
     const redirectToHome = () => {
         props.updateTitle('Home')
         props.history.push('/home');
     }
+
+// Redirects the user to the login page 
     const redirectToRegister = () => {
         props.history.push('/register'); 
         props.updateTitle('Register');
     }
     return(
+
+// inputs on-screen:
+//  added input for email on line no 87.
+//  added password inputs on 99.
+//  added Event handler to submit button
+//  for sending a request to backend server
+//  and we can redirect the user to the home page.
+
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
             <form>
-                <div className="form-group text-left">
+                <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Login with Email address</label>
                 <input type="email" 
                        className="form-control" 
@@ -66,7 +93,7 @@ function LoginForm(props) {
                        value={state.email}
                        onChange={handleChange}
                 />
-                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                <small id="emailHelp" className="text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div className="form-group text-left">
                 <label htmlFor="exampleInputPassword1">Password</label>

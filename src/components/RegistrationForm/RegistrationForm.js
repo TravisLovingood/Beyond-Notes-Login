@@ -1,16 +1,23 @@
 import React, {useState} from 'react';
+// axios  is used to make API requests to the backend.
 import axios from 'axios';
 import './RegistrationForm.css';
 import {API_BASE_URL} from '../../constants/apiContants';
 import { withRouter } from "react-router-dom";
 
 function RegistrationForm(props) {
+
+// The state object will contain the email and password values.
+// The useState hook is being used to handle the values entered by the user.
     const [state , setState] = useState({
         email : "",
         password : "",
         confirmPassword: "",
         successMessage: null
     })
+
+// The setState method is responsible for updating these values.
+// Responsibility for updating the 'values' lies with the 'handleChange' function.    
     const handleChange = (e) => {
         const {id , value} = e.target   
         setState(prevState => ({
@@ -18,6 +25,15 @@ function RegistrationForm(props) {
             [id] : value
         }))
     }
+
+// 'sendDetailsToServer' for backend request.
+// axios  is used to make API requests to the backend.
+
+// !! backend server needed for handling API!!
+
+// added a post request to the server where 'API_BASE_URL'
+//  is defined in the 'constants file'.
+
     const sendDetailsToServer = () => {
         if(state.email.length && state.password.length) {
             props.showError(null);
@@ -44,16 +60,24 @@ function RegistrationForm(props) {
         } else {
             props.showError('Please enter valid username and password')    
         }
-        
+
+// Redirects the user to the Home page  
     }
     const redirectToHome = () => {
         props.updateTitle('Home')
         props.history.push('/home');
     }
+
+// Redirects the user to the login page 
     const redirectToLogin = () => {
         props.updateTitle('Login')
         props.history.push('/login'); 
     }
+
+// 'handleSubmitClick' function checks if the password inputs
+//  match and calls the'sendDetailsToServer'function to make a 
+//  backend API request or show an error.
+
     const handleSubmitClick = (e) => {
         e.preventDefault();
         if(state.password === state.confirmPassword) {
@@ -63,6 +87,14 @@ function RegistrationForm(props) {
         }
     }
     return(
+
+
+// inputs on-screen:
+//  added input for email on line no 102.
+//  added password inputs on 114 and 124.
+//  added Event handler to register button
+//      for sending a request to backend server.
+
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
             <form>
                 <div className="form-group text-left">
@@ -114,7 +146,10 @@ function RegistrationForm(props) {
             </div>
             
         </div>
-    )
+ 
+ );
 }
 
+
 export default withRouter(RegistrationForm);
+

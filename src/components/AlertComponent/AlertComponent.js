@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './AlertComponent.css';
+
+//  added props parameter updating the component state
+//  based on changes in the parent component. 
 function AlertComponent(props) {
     const [modalDisplay, toggleDisplay] = useState('none');
     const openModal = () => {
@@ -9,6 +12,9 @@ function AlertComponent(props) {
         toggleDisplay('none'); 
         props.hideError(null);
     }
+
+//  using react.js hook called useEffect. Basically it listens for changes in prop values
+//  and then executes code written within it based on those changes.
     useEffect(() => {
         if(props.errorMessage !== null) {
             openModal()
@@ -36,3 +42,4 @@ function AlertComponent(props) {
 } 
 
 export default AlertComponent
+
